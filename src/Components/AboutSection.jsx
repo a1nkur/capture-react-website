@@ -1,36 +1,50 @@
 import styled from "styled-components";
 import home1 from "../Assets/img/home1.png";
 
+import { titleAnimation, fadeAnimation, imageAnimation } from "../Animate";
+import { motion } from "framer-motion";
+import Wave from "./Wave";
+import { Fragment } from "react";
+
 const AboutSection = () => {
   return (
-    <AboutSectionContainer>
-      <Content>
-        <TextDescription>
-          <div className="title">
-            <div className="hide">
-              <h2>Lorem ipsum dolor sit.</h2>
+    <Fragment>
+      <AboutSectionContainer>
+        <Content>
+          <TextDescription>
+            <div className="title">
+              <div className="hide">
+                <motion.h2 variants={titleAnimation}>
+                  Lorem ipsum dolor sit.
+                </motion.h2>
+              </div>
+              <div className="hide">
+                <motion.h2 variants={titleAnimation}>
+                  Lorem, <span>ipsum</span> dolor.
+                </motion.h2>
+              </div>
+              <div className="hide">
+                <motion.h2 variants={titleAnimation}>Lorem.</motion.h2>
+              </div>
             </div>
-            <div className="hide">
-              <h2>
-                Lorem, <span>ipsum</span> dolor.
-              </h2>
-            </div>
-            <div className="hide">
-              <h2>Lorem.</h2>
-            </div>
-          </div>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam
-            autem quidem rem, architecto tenetur facere dicta totam inventore
-            amet enim.
-          </p>
-          <button>Contact Us</button>
-        </TextDescription>
-        <ImageContainer>
-          <img src={home1} alt="home-image-1" />
-        </ImageContainer>
-      </Content>
-    </AboutSectionContainer>
+            <motion.p variants={fadeAnimation}>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quisquam
+              autem quidem rem, architecto tenetur facere dicta totam inventore
+              amet enim.
+            </motion.p>
+            <motion.button variants={fadeAnimation}>Contact Us</motion.button>
+          </TextDescription>
+          <ImageContainer>
+            <motion.img
+              src={home1}
+              alt="home-image-1"
+              variants={imageAnimation}
+            />
+          </ImageContainer>
+          <Wave />
+        </Content>
+      </AboutSectionContainer>
+    </Fragment>
   );
 };
 
@@ -56,12 +70,13 @@ const Content = styled.div`
 const TextDescription = styled.div`
   flex: 1;
   padding-right: 5rem;
+  z-index: 2;
 
   .title {
     padding-bottom: 2rem;
 
     .hide {
-      /* overflow: hidden; */ //! animation
+      overflow: hidden; //! animation
     }
   }
 
@@ -72,6 +87,8 @@ const TextDescription = styled.div`
 
 const ImageContainer = styled.div`
   flex: 1;
+  z-index: 2;
+
   /* overflow: hidden; */ //! animation
   img {
     height: 70vh;

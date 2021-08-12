@@ -1,48 +1,66 @@
 import styled from "styled-components";
-import athSml from "../Assets/img/athlete-small.png";
-import athbg from "../Assets/img/athlete2.png";
+// import athSml from "../Assets/img/athlete-small.png";
+// import athbg from "../Assets/img/athlete2.png";
+
+//Import Images
+import athlete from "../Assets/img/athlete-small.png";
+import goodtimes from "../Assets/img/goodtimes-small.png";
+import theracer from "../Assets/img/theracer-small.png";
+import athlete2 from "../Assets/img/athlete2.png";
+import goodtimes2 from "../Assets/img/good-times2.jpg";
+import theracer2 from "../Assets/img/the-racer2.jpg";
+
+import { useHistory } from "react-router-dom";
+import { useEffect, useState, Fragment } from "react";
+
+import { MovieState } from "../moviestate.js";
 
 const MovieDetail = () => {
+  const history = useHistory();
+  const pathName = history.location.pathname;
+
+  const [currentlySelectedMovie, setCurrentlySelectedMovie] = useState(null);
+
+  useEffect(() => {
+    const filteredArr = MovieState().filter(item => item.url === pathName);
+    setCurrentlySelectedMovie(filteredArr[0]);
+  }, [MovieState, pathName]);
+
   return (
-    <MovieDetailContainer>
-      <header>
-        <h2>The Athlete</h2>
-        <div className="small-image__container">
-          <img src={athSml} alt="" />
-        </div>
-      </header>
-      <AwardSection>
-        <div className="container">
-          <div className="award-1">
-            <h2>Truly A masterpiece</h2>
-            <div className="line"></div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio,
-              non.
-            </p>
-          </div>
-          <div className="award-2">
-            <h2>Fresh look on a brutal sport.</h2>
-            <div className="line"></div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio,
-              non.
-            </p>
-          </div>
-          <div className="award-3">
-            <h2>It’s okay. One time watch.</h2>
-            <div className="line"></div>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Optio,
-              non.
-            </p>
-          </div>
-        </div>
-      </AwardSection>
-      <BigImageContainer>
-        <img src={athbg} alt="" />
-      </BigImageContainer>
-    </MovieDetailContainer>
+    <Fragment>
+      {currentlySelectedMovie && (
+        <MovieDetailContainer>
+          <header>
+            <h2>{currentlySelectedMovie.title}</h2>
+            <div className="small-image__container">
+              <img src={currentlySelectedMovie.mainImg} alt="" />
+            </div>
+          </header>
+          <AwardSection>
+            <div className="container">
+              <div className="award-1">
+                <h2>{currentlySelectedMovie.awards[0].title}</h2>
+                <div className="line"></div>
+                <p>{currentlySelectedMovie.awards[0].description}</p>
+              </div>
+              <div className="award-2">
+                <h2>{currentlySelectedMovie.awards[1].title}</h2>
+                <div className="line"></div>
+                <p>{currentlySelectedMovie.awards[1].description}</p>
+              </div>
+              <div className="award-3">
+                <h2>{currentlySelectedMovie.awards[2].title}</h2>
+                <div className="line"></div>
+                <p>{currentlySelectedMovie.awards[2].description}</p>
+              </div>
+            </div>
+          </AwardSection>
+          <BigImageContainer>
+            <img src={currentlySelectedMovie.secondaryImg} alt="" />
+          </BigImageContainer>
+        </MovieDetailContainer>
+      )}
+    </Fragment>
   );
 };
 

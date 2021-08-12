@@ -6,23 +6,32 @@ import OurWorkPage from "./Pages/OurWorkPage";
 import ContactUsPage from "./Pages/ContactUsPage";
 import MovieDetail from "./Components/MovieDetail";
 
+import { AnimatePresence } from "framer-motion";
+import { useLocation } from "react-router-dom";
+
 function App() {
+  const location = useLocation();
+
   return (
     <div className="App">
       <GlobalStyle />
       <Navbar />
-      <Switch>
-        <Route to="/" exact>
-          <AboutPage />
-        </Route>
-        <Route to="/work" >
-          <OurWorkPage />
-        </Route>
-        <Route to="/contact">
-          <ContactUsPage />
-        </Route>
-      </Switch> 
-      {/* <MovieDetail /> */}
+      <AnimatePresence exitBeforeEnter>
+        <Switch key={location.pathname} location={location}>
+          <Route path="/" exact>
+            <AboutPage />
+          </Route>
+          <Route path="/work" exact>
+            <OurWorkPage />
+          </Route>
+          <Route path="/work/:id">
+            <MovieDetail />
+          </Route>
+          <Route path="/contact">
+            <ContactUsPage />
+          </Route>
+        </Switch>
+      </AnimatePresence>
     </div>
   );
 }
